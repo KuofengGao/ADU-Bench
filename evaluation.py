@@ -2,7 +2,7 @@ import re
 import json
 import argparse
 from tqdm import tqdm
-import openai
+from openai import OpenAI 
 import numpy as np
 
 
@@ -58,8 +58,9 @@ def gpt_crawler(prompt, retry=5):
 
     for _ in range(retry):
         try:
-            completion = openai.ChatCompletion.create(
-                model="gpt-4",
+            client = OpenAI(api_key=your_api_key)
+            completion = client.chat.completions.create(
+                model="gpt-4-0613",
                 messages=messages_l
             )
             response = completion["choices"][0]["message"]["content"]
